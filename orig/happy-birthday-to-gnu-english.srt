@@ -1,0 +1,372 @@
+1
+00:00:00,000 --> 00:00:01,999
+Computers
+
+2
+00:00:02,000 --> 00:00:05,999
+I've loved them since I've been able to
+afford to have my own
+
+3
+00:00:06,000 --> 00:00:08,999
+back in the beginning of the modern computer era,
+
+4
+00:00:09,000 --> 00:00:10,999
+the 1980s.
+
+5
+00:00:11,000 --> 00:00:13,999
+And I've owned a large number of different kinds of computer
+
+6
+00:00:14,000 --> 00:00:16,999
+and I've expressed, publicly, loyalty to this kind or that kind.
+
+7
+00:00:17,000 --> 00:00:23,999
+But recently my mind has turned, as many people's have,
+to this whole business of Free Software.
+
+8
+00:00:24,000 --> 00:00:25,999
+There is a lot of confusion about what this means
+
+9
+00:00:26,000 --> 00:00:27,999
+and I'd like to help clear it up
+
+10
+00:00:28,000 --> 00:00:30,999
+because this happens to be a year of celebration,
+
+11
+00:00:31,000 --> 00:00:33,999
+and I want to help us all celebrate it
+
+12
+00:00:34,000 --> 00:00:35,999
+and to look forward to the future of Free Software.
+
+13
+00:00:37,000 --> 00:00:38,999
+If you have
+
+14
+00:00:39,000 --> 00:00:40,999
+plumbing in your house
+
+15
+00:00:41,000 --> 00:00:42,999
+it may be that you don't understand it,
+
+16
+00:00:43,000 --> 00:00:44,999
+but you may have a friend that does
+
+17
+00:00:45,000 --> 00:00:46,999
+and they may suggest you move a pipe here, a stopcock there,
+
+18
+00:00:47,000 --> 00:00:50,999
+or a valve somewhere else.
+
+19
+00:00:51,000 --> 00:00:52,999
+And you're not breaking the law by doing that, are you?
+
+20
+00:00:53,000 --> 00:00:54,999
+Because it's your house and you own the plumbing.
+
+21
+00:00:55,000 --> 00:00:56,999
+You can't do that with your computer.
+
+22
+00:00:57,000 --> 00:00:59,999
+You can't actually fiddle with your operating system,
+
+23
+00:01:00,000 --> 00:01:06,999
+and you certainly can't share any ideas you have about
+your operating system with other people
+
+24
+00:01:07,000 --> 00:01:11,999
+because Apple and Microsoft, who run the two most popular operating systems
+
+25
+00:01:12,000 --> 00:01:14,999
+are very firm about that fact that they own that
+
+26
+00:01:15,000 --> 00:01:17,999
+and no one else can have anything to do with it.
+
+27
+00:01:18,000 --> 00:01:19,999
+Now this may seem natural to you:
+
+28
+00:01:20,000 --> 00:01:21,999
+"Why shouldn't they?"
+
+29
+00:01:22,000 --> 00:01:23,999
+But actually, Why can't you do what you like?
+
+30
+00:01:24,000 --> 00:01:31,999
+And why can't the community alter, improve, and share?
+
+31
+00:01:32,000 --> 00:01:33,999
+That's how science works, after all...
+
+32
+00:01:34,000 --> 00:01:35,999
+All knowledge is free,
+
+33
+00:01:36,000 --> 00:01:37,999
+and all knowledge is shared in good science.
+
+34
+00:01:38,000 --> 00:01:39,999
+If it isn't -- it's bad science
+
+35
+00:01:40,000 --> 00:01:42,999
+and it's a kind of tyranny.
+
+36
+00:01:43,000 --> 00:01:44,999
+And this is, really, where it all started
+
+37
+00:01:45,000 --> 00:01:46,999
+A man called Richard Stallman
+
+38
+00:01:47,000 --> 00:01:49,999
+decided 25 years ago, almost to this very day, to
+
+39
+00:01:50,000 --> 00:01:53,999
+write a whole new operating system from the ground up.
+
+40
+00:01:54,000 --> 00:01:59,999
+He called this system GNU which stands for "GNU is Not Unix"
+
+41
+00:02:00,000 --> 00:02:01,999
+because it isn't Unix,
+
+42
+00:02:02,000 --> 00:02:04,999
+it is similar to Unix in many ways,
+
+43
+00:02:05,000 --> 00:02:10,999
+but every element of it, every module, every little section of the code
+
+44
+00:02:11,000 --> 00:02:13,999
+(and it's a gigantic code because it's to run on many platforms)
+
+45
+00:02:14,000 --> 00:02:19,999
+is run by the community, run by coders "out there"
+
+46
+00:02:20,000 --> 00:02:25,999
+who are welcomed in to the GNU community, to help improve the software.
+
+47
+00:02:26,000 --> 00:02:31,999
+Every "distro", as they are called, every distribution of GNU
+
+48
+00:02:32,000 --> 00:02:34,999
+is tested, worked upon, and refined
+
+49
+00:02:35,000 --> 00:02:39,999
+by people whose only interest is creating the perfect operating system
+
+50
+00:02:40,000 --> 00:02:45,999
+that can be used across the spectrum of platforms and by as many users as possible.
+
+51
+00:02:47,000 --> 00:02:53,999
+Now, there came a time when the kernel, which
+is the central part of an operating system,
+needed to be written.
+
+52
+00:02:55,000 --> 00:02:56,999
+And a man called Linus Torvalds, of whom you may have heard,
+
+53
+00:02:57,000 --> 00:02:58,999
+wrote the kernel and it was named after his name,
+
+54
+00:03:00,000 --> 00:03:01,999
+Linux (line-ucks)
+
+55
+00:03:03,000 --> 00:03:04,999
+or Linux (Lin-ucks) as some people pronounce it.
+
+56
+00:03:07,000 --> 00:03:08,999
+And Linux is the kernel that runs within GNU
+
+57
+00:03:11,000 --> 00:03:12,999
+and I'm here
+
+58
+00:03:14,000 --> 00:03:19,999
+simply to remind you that GNU and Linux are the twin pillars
+of the Free Software community,
+
+59
+00:03:20,000 --> 00:03:21,999
+people who believe, and this is the important part,
+
+60
+00:03:24,000 --> 00:03:25,999
+that software should be Free,
+
+61
+00:03:26,000 --> 00:03:27,999
+that the community of users should be allowed to adapt it,
+
+62
+00:03:28,000 --> 00:03:35,999
+adopt it, change it, to improve it, and to spread those improvements around,
+
+63
+00:03:36,000 --> 00:03:37,999
+like science.
+
+64
+00:03:38,000 --> 00:03:39,999
+That's basically what it is saying.
+
+65
+00:03:40,000 --> 00:03:42,999
+In the same way that good scientists share everything
+and all knowledge is open and free
+
+66
+00:03:43,000 --> 00:03:44,999
+so it should be with an operating system.
+
+67
+00:03:46,000 --> 00:03:47,999
+So, if you're a supporter of GNU,
+
+68
+00:03:48,000 --> 00:03:50,999
+if you're a support of Linux, and the Free Software Foundation,
+
+69
+00:03:52,000 --> 00:03:55,999
+you are probably wondering "Well what can I do?"
+
+70
+00:03:56,000 --> 00:04:00,999
+The most obvious thing you can do is use a GNU/Linux operating system
+on your own computer.
+
+71
+00:04:01,000 --> 00:04:02,999
+It's much easier than you might think.
+
+72
+00:04:03,000 --> 00:04:06,999
+Go to the website "gnu.org" and see if you can find an operating system
+that suits you.
+
+73
+00:04:07,000 --> 00:04:09,999
+Probably, if you like a good graphical user-interface,
+
+74
+00:04:10,000 --> 00:04:13,999
+something like g-New-Sense, gNewSense
+
+75
+00:04:14,000 --> 00:04:16,999
+You'll see it there on gnu.org.
+
+76
+00:04:17,000 --> 00:04:18,999
+Or, if you're a really smart cookie,
+
+77
+00:04:19,000 --> 00:04:20,999
+you might want to do your own coding.
+
+78
+00:04:21,000 --> 00:04:22,999
+You might want to contribute to the sum of knowledge
+
+79
+00:04:23,000 --> 00:04:25,999
+that makes GNU and Linux what they are.
+
+80
+00:04:26,000 --> 00:04:27,999
+Either way,
+
+81
+00:04:28,000 --> 00:04:29,999
+I hope you will join me
+
+82
+00:04:30,000 --> 00:04:32,999
+in wishing GNU a very happy twenty-fifth birthday.
+
+83
+00:04:33,000 --> 00:04:34,999
+Lets do that now, actually...
+
+84
+00:04:38,000 --> 00:04:39,999
+Happy birthday, GNU!
+
+85
+00:04:40,000 --> 00:04:41,999
+Twenty-five years old.
+
+86
+00:04:42,000 --> 00:04:43,999
+The operating system of the future.
+
+87
+00:04:44,000 --> 00:04:45,999
+Freedom!
+
+88
+00:04:53,000 --> 00:04:54,999
+Chocolaty good.
+
+89
+00:04:55,000 --> 00:04:56,999
+The tastiest operating system in the world...
+
+90
+00:04:57,000 --> 00:04:58,999
+and it's all free.
+
+91
+00:05:49,000 --> 00:05:50,999
+Captions: Gregory Maxwell

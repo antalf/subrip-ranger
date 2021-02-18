@@ -1,0 +1,5 @@
+/*.egg-info/
+/.vscode/
+/dist/
+/venv/
+__pycache__/
