@@ -10,6 +10,7 @@ from . import timecodes
 
 DEFAULT_ENCODING = 'ISO8859-1'
 DEFAULT_START_INDEX = 1
+DEFAULT_SCALE = 1.0
 DEFAULT_LOG_LEVEL = logging.WARN
 
 logger = logging.getLogger(__name__)
@@ -37,9 +38,15 @@ def main():
     )
     argparser.add_argument(
         '-l', '--last-disappearance',
-        required=True,
         help='Disappearing timecode of last subtitle in HH:MM:SS,SSS format',
         metavar='TIMECODE',
+    )
+    argparser.add_argument(
+        '-c', '--scale',
+        type=float,
+        default=DEFAULT_SCALE,
+        help='scale (last disappearance overrides it) [%(default)s]',
+        metavar='FLOAT',
     )
     argparser.add_argument(
         '-e', '--encoding',
@@ -87,12 +94,11 @@ def main():
         if content != '':
             subtitles.append(subtitle)
 
-    dest = timecodes.Period(
-        timecodes.Timecode.from_timecode_string(args.first_appearance).value,
-        timecodes.Timecode.from_timecode_string(args.last_disappearance).value
-    )
     adjuster = timecodes.Adjuster()
-    adjuster.set_dest(dest)
+    adjuster.set_params(
+        args.first_appearance,
+        last_disappearance=args.last_disappearance, scale=args.scale
+    )
 
     with open(file=args.output_file, encoding=args.encoding, mode='w') as output:
         index = args.start_index

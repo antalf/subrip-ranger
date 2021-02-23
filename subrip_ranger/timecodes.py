@@ -30,9 +30,9 @@ class Adjuster:
         self.__dict__ = self._borg_state
         if not self._borg_state:
             self.orig = Period(None, None)
-            self.dest = None
-            self.offset = None
+            self.dest = Period(None, None)
             self.scale = None
+            self.offset = None
 
     def update(self, value: datetime.timedelta):
         """Stretch a range around into orig by finding min and max value."""
@@ -42,21 +42,31 @@ class Adjuster:
         except TypeError:
             self.orig.start = self.orig.end = value
 
-    def set_dest(self, dest: Period):
+    def set_params(
+        self, first_appearance: str,
+        last_disappearance: str = None, scale: float = None
+    ):
         """
         Calculate scale and offset for adjustment from original timecode
         range and the desired range.
 
         Call this after calling update on all original timecodes. 
         """
-        self.dest = dest
-        self.scale = self.dest.range / self.orig.range
+        self.dest.start = \
+            Timecode.timecode_string_to_timedelta(first_appearance)
+        if last_disappearance is not None:
+            self.dest.end = \
+                Timecode.timecode_string_to_timedelta(last_disappearance)
+            self.scale = self.dest.range / self.orig.range
+        elif scale is not None:
+            self.scale = scale
+        else:
+            raise ValueError('last disappearance or scale must be set')
         self.offset = self.orig.start - self.dest.start
         logger.info(
             'original timecodes from %s to %s', self.orig.start, self.orig.end
         )
         logger.info('scaling with %f', self.scale)
-        logger.info('desired first timecode difference %s', self.offset)
 
     def adjust(self, value: datetime.timedelta):
         """Return desired value for a timecode."""
@@ -85,11 +95,16 @@ class Timecode:
     @classmethod
     def from_timecode_string(cls, timecode_string):
         """Alternative constructor for timecode format handling."""
+        return cls(cls.timecode_string_to_timedelta(timecode_string))
+
+    @classmethod
+    def timecode_string_to_timedelta(cls, timecode_string):
+        """return timedelta from timecode string"""
         match = cls.TIMECODE_PATTERN.match(timecode_string)
         if not match:
             raise ValueError(f'invalid timecode format "{timecode_string}"')
         kwargs = dict((unit, int(match.group(unit))) for unit in cls.UNITS)
-        return cls(datetime.timedelta(**kwargs))
+        return datetime.timedelta(**kwargs)
 
     def __str__(self):
         """Return internal timedelta value in timecode format."""
@@ -124,6 +139,7 @@ class AdjustibleTimecode(Timecode):
         adjusted = self.adjuster.adjust(self.value)
         logger.debug('adjust %s to %s', self.value, adjusted)
         self.value = adjusted
+
 
 class TimecodeLine(NamedTuple):
     """

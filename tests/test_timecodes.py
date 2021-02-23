@@ -22,8 +22,8 @@ class PeriodTest(TestCase):
     
 
 class AdjusterTest(TestCase):
-    DEST_FIRST_APPEARANCE = datetime.timedelta(minutes=1, seconds=3)
-    DEST_LAST_DISAPPERANCE = datetime.timedelta(minutes=1, seconds=6)
+    DEST_FIRST_APPEARANCE = '00:01:03,000'
+    DEST_LAST_DISAPPERANCE = '00:01:06,000'
     TIMECODE_FIRST = datetime.timedelta(minutes=1, seconds=2)
     TIMECODE_LAST = datetime.timedelta(minutes=1, seconds=5)
 
@@ -32,9 +32,14 @@ class AdjusterTest(TestCase):
         self.adjuster = timecodes.Adjuster()
         self.adjuster.update(self.TIMECODE_FIRST)
         self.adjuster.update(self.TIMECODE_LAST)
-        self.dest = timecodes.Period(
-            self.DEST_FIRST_APPEARANCE, self.DEST_LAST_DISAPPERANCE
-        )
+        self.dest_first_appearance = \
+            timecodes.Timecode.timecode_string_to_timedelta(
+                self.DEST_FIRST_APPEARANCE
+            )
+        self.dest_last_disapperance = \
+            timecodes.Timecode.timecode_string_to_timedelta(
+                self.DEST_LAST_DISAPPERANCE
+            )
 
     def test_update(self):
         """updating range start and end properly"""
@@ -43,16 +48,25 @@ class AdjusterTest(TestCase):
 
     def test_dest_setting(self):
         """calculate scale and offset properly upon setting destination"""
-        self.adjuster.set_dest(self.dest)
+        self.adjuster.set_params(
+            self.DEST_FIRST_APPEARANCE,
+            last_disappearance=self.DEST_LAST_DISAPPERANCE
+        )
         self.assertEqual(self.adjuster.scale, 1.0)
         self.assertEqual(self.adjuster.offset,
-                         self.TIMECODE_FIRST - self.DEST_FIRST_APPEARANCE)
+                         self.TIMECODE_FIRST - self.dest_first_appearance)
+
+    def test_lack_of_dest_last(self):
+        """missing dest last results no scaling"""
+        self.adjuster.set_params(self.DEST_FIRST_APPEARANCE, scale=1.0)
+        expected = 1.0
+        self.assertEqual(self.adjuster.scale, expected)
 
     def test_adjusting(self):
         """calculate adjustment properly"""
-        self.adjuster.set_dest(self.dest)
+        self.adjuster.set_params(self.DEST_FIRST_APPEARANCE, scale=1.0)
         adjusted = self.adjuster.adjust(self.TIMECODE_FIRST)
-        self.assertEqual(self.DEST_FIRST_APPEARANCE, adjusted)
+        self.assertEqual(self.dest_first_appearance, adjusted)
 
 
 class TimecodeTest(TestCase):
@@ -108,13 +122,12 @@ class AdjustibleTimecodeTest(TestCase):
             self.TIMECODE_LAST
         )
         adjuster = timecodes.Adjuster()
-        dest = timecodes.Period(
-            timecodes.Timecode.from_timecode_string(self.DEST_START).value,
-            timecodes.Timecode.from_timecode_string(self.DEST_END).value
-        )
-        adjuster.set_dest(dest)
+        adjuster.set_params(self.DEST_START, scale=1.0)
         timecode_first.adjust()
-        self.assertEqual(timecode_first.value, dest.start)
+        expected = timecodes.Timecode.timecode_string_to_timedelta(
+            self.DEST_START
+        )
+        self.assertEqual(timecode_first.value, expected)
 
 
 class TimecodeLineTest(TestCase):
@@ -146,7 +159,7 @@ class TimecodeLineTest(TestCase):
             timecodes.Timecode.from_timecode_string(self.DEST_END).value
         )
         adjuster = timecodes.Adjuster()
-        adjuster.set_dest(dest)
+        adjuster.set_params(self.DEST_START, last_disappearance=self.DEST_END)
         self.timecode_line.adjust()
         result = str(self.timecode_line)
         expected = '00:42:56,990 --> 00:43:01,910'
