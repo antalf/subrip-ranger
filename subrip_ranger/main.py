@@ -1,51 +1,66 @@
 """
 Recalculate SubRip subtitle file to scale to the specified first and last
-timing.
+timing or scaling.
 """
 
 import argparse
 import logging
 
-from . import timecodes
+from . import timecodes, subtitles
 
 DEFAULT_ENCODING = 'ISO8859-1'
 DEFAULT_START_INDEX = 1
 DEFAULT_SCALE = 1.0
-DEFAULT_LOG_LEVEL = logging.WARN
+DEFAULT_LOG_LEVEL = logging.WARNING
 
 logger = logging.getLogger(__name__)
 
 
 def main():
+    argparser = get_argparser()
+    args = argparser.parse_args()
+
+    log_level = logging._nameToLevel[args.log_level]
+    logging.basicConfig(level=log_level)
+
+    subtitle_sequence = subtitles.SubtitleSequence(args.start_index)
+    with open(args.input_file, encoding=args.encoding, mode='r') as input:
+        subtitle_sequence.parse(input)
+
+    timecodes.Adjuster().set_params(
+        args.first_appearance,
+        last_disappearance=args.last_disappearance, scale=args.scale
+    )
+    subtitle_sequence.adjust()
+
+    with open(args.output_file, encoding=args.encoding, mode='w') as output:
+        subtitle_sequence.write(output)
+
+
+def get_argparser():
     argparser = argparse.ArgumentParser(description=__doc__)
     argparser.add_argument(
-        '-i', '--input-file',
-        required=True,
+        'first_appearance',
+        help='Appearance timecode of first subtitle in HH:MM:SS,SSS format',
+    )
+    argparser.add_argument(
+        'input_file',
         help='Source SubRip file',
-        metavar='FILE',
     )
     argparser.add_argument(
-        '-o', '--output-file',
-        required=True,
+        'output_file',
         help='Target SubRip file',
-        metavar='FILE',
-    )
-    argparser.add_argument(
-        '-f', '--first-appearance',
-        required=True,
-        help='Appearing timecode of first subtitle in HH:MM:SS,SSS format',
-        metavar='TIMECODE',
     )
     argparser.add_argument(
         '-l', '--last-disappearance',
-        help='Disappearing timecode of last subtitle in HH:MM:SS,SSS format',
+        help='Disappearance timecode of last subtitle in HH:MM:SS,SSS format',
         metavar='TIMECODE',
     )
     argparser.add_argument(
-        '-c', '--scale',
+        '-s', '--scale',
         type=float,
         default=DEFAULT_SCALE,
-        help='scale (last disappearance overrides it) [%(default)s]',
+        help='Scale ratio (--last-disappearance overrides it) [%(default)s]',
         metavar='FLOAT',
     )
     argparser.add_argument(
@@ -55,58 +70,17 @@ def main():
         metavar='ENCODING',
     )
     argparser.add_argument(
-        '-s', '--start-index',
-        default=DEFAULT_START_INDEX,
+        '-i', '--start-index',
         type=int,
+        default=DEFAULT_START_INDEX,
         help='Start index of the first subtitle [%(default)d]',
         metavar='INDEX',
     )
     argparser.add_argument(
         '-d', '--log-level',
+        choices = logging._levelToName.values(),
         default=logging.getLevelName(DEFAULT_LOG_LEVEL),
         help='Verbosity level [%(default)s]',
         metavar='LOG_LEVEL',
     )
-    args = argparser.parse_args()
-
-    log_level = int(getattr(logging, args.log_level))
-    logging.basicConfig(level=log_level)
-
-    subtitles = []
-    with open(file=args.input_file, encoding=args.encoding, mode='r') as input:
-        state = 'index'
-        subtitle = {}
-        content = ''
-        for line in input:
-            content = line.rstrip()
-            if content == '':
-                state = 'index'
-                subtitles.append(subtitle)
-            elif state == 'index':
-                subtitle = {'index': int(content), 'lines': []}
-                state = 'timecodes'
-            elif state == 'timecodes':
-                subtitle['timecode_line'] = \
-                    timecodes.TimecodeLine.from_timecode_line_string(content)
-                state = 'subtitle'
-            elif state == 'subtitle':
-                subtitle['lines'].append(content)
-        if content != '':
-            subtitles.append(subtitle)
-
-    adjuster = timecodes.Adjuster()
-    adjuster.set_params(
-        args.first_appearance,
-        last_disappearance=args.last_disappearance, scale=args.scale
-    )
-
-    with open(file=args.output_file, encoding=args.encoding, mode='w') as output:
-        index = args.start_index
-        for subtitle in subtitles:
-            if index != args.start_index:
-                output.write('\n')
-            output.write(f'{index}\n')
-            subtitle['timecode_line'].adjust()
-            output.write('%s\n' % str(subtitle['timecode_line']))
-            output.write('%s\n' % '\n'.join(subtitle['lines']))
-            index += 1
+    return argparser

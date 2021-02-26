@@ -23,7 +23,7 @@ example SubRip file:
 
 ```
   subrip_ranger \
-    -i orig/happy-birthday-to-gnu-english.srt \
-    -o /tmp/test.srt \
-    -f '00:00:01,000'
+    00:00:01,000 \
+    orig/happy-birthday-to-gnu-english.srt \
+    /tmp/test.srt
 ```
